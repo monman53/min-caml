@@ -11,6 +11,7 @@ let addtyp x = (x, Type.gentyp ())
 %token NOT
 %token MINUS
 %token PLUS
+%token AST
 %token MINUS_DOT
 %token PLUS_DOT
 %token AST_DOT
@@ -47,7 +48,7 @@ let addtyp x = (x, Type.gentyp ())
 %left COMMA
 %left EQUAL LESS_GREATER LESS GREATER LESS_EQUAL GREATER_EQUAL
 %left PLUS MINUS PLUS_DOT MINUS_DOT
-%left AST_DOT SLASH_DOT
+%left AST AST_DOT SLASH_DOT
 %right prec_unary_minus
 %left prec_app
 %left DOT
@@ -89,6 +90,8 @@ exp: /* (* ∞Ï»Ã§Œº∞ (caml2html: parser_exp) *) */
     { Add($1, $3) }
 | exp MINUS exp
     { Sub($1, $3) }
+| exp AST exp
+    { Mul($1, $3) }
 | exp EQUAL exp
     { Eq($1, $3) }
 | exp LESS_GREATER exp
